@@ -2,12 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const header = document.getElementById("main-header");
   const toggle = document.getElementById("theme-toggle");
   const menu = document.getElementById("theme-menu");
+  if (!header || !toggle || !menu) return;
 
   toggle.addEventListener("click", () => {
     menu.classList.toggle("hidden");
   });
 
-  // Fecha ao clicar fora
   document.addEventListener("click", (e) => {
     if (!toggle.contains(e.target) && !menu.contains(e.target)) {
       menu.classList.add("hidden");
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const theme = btn.dataset.theme;
       console.log("Tema selecionado:", theme);
       menu.classList.add("hidden");
-      // Aqui depois você pode aplicar lógica de trocar tema
+      // Aqui aplicar lógica de trocar tema
     });
   });
 

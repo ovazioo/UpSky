@@ -17,35 +17,16 @@ body {
     text-decoration: none;
   }
 
-  button {
-    cursor: pointer;
-    border: none;
-    border-radius: 15px;
-    background-color: #145077;
-    color: white;
-    font-weight: 700;
-    padding: 0.5em 1.5em;
-    box-shadow: 0 4px 6px rgb(20 80 120 / 0.3);
-    transition: background-color 0.3s, box-shadow 0.3s;
-  }
-  button:hover {
-    background-color: #0e3555;
-    box-shadow: 0 6px 12px rgb(14 53 85 / 0.5);
-  }
-
   img {
     max-width: 100%;
     display: block;
   }
-
-  /* Container principal */
   .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px 15px;
   }
 
-/* header (fixo, mas escondido por transform) */
 header.site-header {
   position: fixed;
   top: 0;
@@ -61,7 +42,7 @@ header.site-header {
   transition: transform 260ms ease, background 260ms ease, box-shadow 260ms ease;
   z-index: 1000;
   pointer-events: none;            /* não interage enquanto escondido */
-  background: rgba(255,255,255,0.0); /* transparente quando escondido */
+  background: rgba(255,255,255,0.0);
 }
 
 /* estado visível (quando o usuário já rolou) */
@@ -73,24 +54,20 @@ header.site-header.visible {
   box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
-/* evita que o conteúdo fique por trás do header quando ele aparece */
 body.header-visible {
   padding-top: var(--header-height);
 }
 
-/* ajustes responsivos: calcule altura menor em telas pequenas */
 @media (max-width: 480px) {
   :root { --header-height: 56px; }
   header.site-header { padding: 10px 14px; }
 }
 
-/* Estilos adicionais: garanta que o container do header alinhe como o resto */
 .container {
   max-width: 1100px;
   margin: 0 auto;
 }
 
-/* Opcional: suavizar botões no header */
 header.site-header .logo img { height: 34px; }
 header.site-header button { padding: 8px 12px; border-radius: 8px; }
 
@@ -152,7 +129,6 @@ header.site-header button { padding: 8px 12px; border-radius: 8px; }
     font-size: 1.1rem;
   }
 
-  /* Área do botão do mapa mental interativo */
   .section-middle .btn-mapa {
     margin-top: 30px;
     display: flex;
@@ -210,68 +186,4 @@ header.site-header button { padding: 8px 12px; border-radius: 8px; }
   .section-middle .image-illustration img {
     max-width: 100%;
     height: auto;
-  }
-
-  /* RODAPÉ */
-  footer {
-    border-top: 2px solid #afc8d9;
-    padding: 20px 15px;
-    font-size: 0.9rem;
-    color: #0e4870;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 10px;
-  }
-
-  footer .footer-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex: 1 1 250px;
-  }
-  footer .footer-left img {
-    height: 32px;
-  }
-  footer .footer-center {
-    flex: 1 1 300px;
-    font-weight: 600;
-  }
-  footer .footer-right {
-    flex: 1 1 300px;
-    font-weight: 600;
-  }
-
-  footer .footer-right div {
-    margin: 5px 0;
-  }
-
-  footer .social-icons span {
-    margin-right: 10px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  /* Ícones simples para redes sociais */
-  .icon-instagram::before {
-    content: "📸";
-  }
-  .icon-facebook::before {
-    content: "📘";
-  }
-
-  /* Responsividade */
-  @media(max-width: 900px) {
-    .section-top,
-    .section-middle {
-      flex-direction: column;
-    }
-    header, .footer-first-section, footer {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    footer {
-      gap: 20px;
-    }
   }
