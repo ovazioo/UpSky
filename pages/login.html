@@ -4,44 +4,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Up Sky - Login or Register</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <title>Up Sky - Login ou Cadastro</title>
 </head>
 
-<body>
-    <main>
-        <section class="login-section">
-            <div class="login-div max-w-sm w-full p-6 rounded-lg shadow-md bg-white flex flex-col space-y-4">
-                <h1 class="login-title text-3xl font-bold text-gray-800 text-center justify-center">SING IN</h1>
-                <form class="login-form">
-                    <input
-                        class="login-input w-full rounded-md border px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        type="text" placeholder="Usuario ou Email">
-                    <input
-                        class="login-input w-full rounded-md border px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        type="password" placeholder="Senha">
-                    <a href="#" class="login-link text-right text-sm text-gray-500 hover:underline">Esqueci minha
-                        senha?</a>
-                    <button
-                        class="login-button w-full bg-blue-600 text-white rounded-md py-2 hover:bg-blue-700 transition"
-                        type="submit">Entrar</button>
-                    <div class="separator flex items-center my-4">
+<body class="bg-gray-100">
+    <main class="flex min-h-screen">
+        <section class="flex-1 flex items-center justify-center p-6" style="background-color:#0a5579;">
+            <!-- Login Card -->
+            <div id="login-card" class="max-w-sm w-full p-6 rounded-lg shadow-md bg-white flex flex-col space-y-4">
+                <h1 class="text-3xl font-bold text-gray-800 text-center">SING IN</h1>
+                <form class="flex flex-col space-y-3">
+                    <input type="text" placeholder="Usuário ou Email"
+                        class="w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required>
+                    <input type="password" placeholder="Senha"
+                        class="w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required>
+                    <a href="#" class="text-sm text-right text-gray-500 hover:underline">Esqueci minha senha?</a>
+                    <button type="submit" class="w-full py-2 text-white rounded-md hover:bg-blue-700 transition"
+                        style="background-color:#0a5579">Entrar</button>
+
+                    <div class="flex items-center my-4">
                         <hr class="flex-grow border-gray-300">
                         <span class="mx-4 text-gray-500">OU</span>
                         <hr class="flex-grow border-gray-300">
                     </div>
-                    <button
-                        class="google-login flex items-center justify-center border rounded px-4 py-2 w-full hover:bg-gray-100">
-                        <img width="38" height="38" src="https://img.icons8.com/fluency/96/google-logo.png"
-                            alt="google-logo" class="mr-2">Entrar com
-                        Google</button>
+
+                    <button type="button"
+                        class="flex items-center justify-center border rounded px-4 py-2 w-full hover:bg-gray-100">
+                        <img width="24" height="24" src="https://img.icons8.com/fluency/96/google-logo.png"
+                            class="mr-2">Entrar com Google
+                    </button>
+
+                    <p class="text-center text-sm text-gray-600">Não possui conta?
+                        <a href="#" id="show-register" class="hover:underline">Criar conta.</a>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Cadastro Card -->
+            <div id="register-card"
+                class="max-w-sm w-full p-6 rounded-lg shadow-md bg-white flex flex-col space-y-4 hidden">
+                <h1 class="text-3xl font-bold text-gray-800 text-center">SING UP</h1>
+                <form class="flex flex-col space-y-3">
+                    <input type="text" placeholder="Usuário"
+                        class="w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required>
+                    <input type="text" placeholder="Nome Completo"
+                        class="w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required>
+                    <input type="email" placeholder="Email"
+                        class="w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required>
+                    <input type="date" placeholder="Data de Nascimento"
+                        class="w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required>
+                    <input type="password" placeholder="Senha"
+                        class="w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required>
+                    <button type="submit" class="w-full py-2 text-white rounded-md hover:bg-blue-700 transition"
+                        style="background-color:#0a5579">
+                        Cadastrar-se
+                    </button>
+
+                    <div class="flex items-center my-4">
+                        <hr class="flex-grow border-gray-300">
+                        <span class="mx-4 text-gray-500">OU</span>
+                        <hr class="flex-grow border-gray-300">
+                    </div>
+
+                    <button type="button"
+                        class="flex items-center justify-center border rounded px-4 py-2 w-full hover:bg-gray-100">
+                        <img width="24" height="24" src="https://img.icons8.com/fluency/96/google-logo.png"
+                            class="mr-2">Cadastrar-se com Google
+                    </button>
+
+                    <p class="text-center text-sm text-gray-600">Já possui conta?
+                        <a href="#" id="show-login" class="hover:underline">Faça login.</a>
+                    </p>
                 </form>
             </div>
         </section>
-        <section class="img-section">
-            <div class="img-div"></div>
+
+        <!-- Coluna de imagem/branding -->
+        <section class="flex-1 hidden md:flex items-center justify-center bg-white">
+            <div class="text-center">
+                <img src="../assets/imgs/logo-escura.svg" alt="Logo" class="mx-auto mb-4 w-40 h-40">
+                <h2 class="text-2xl font-bold text-gray-800">Plataforma de Aprendizado de Nuvem</h2>
+            </div>
         </section>
     </main>
 
