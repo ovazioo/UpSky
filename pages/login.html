@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Up Sky - Login or Register</title>
+</head>
+
+<body>
+    <main>
+        <section class="login-section">
+            <div class="login-div max-w-sm w-full p-6 rounded-lg shadow-md bg-white flex flex-col space-y-4">
+                <h1 class="login-title text-3xl font-bold text-gray-800 text-center justify-center">SING IN</h1>
+                <form class="login-form">
+                    <input
+                        class="login-input w-full rounded-md border px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        type="text" placeholder="Usuario ou Email">
+                    <input
+                        class="login-input w-full rounded-md border px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        type="password" placeholder="Senha">
+                    <a href="#" class="login-link text-right text-sm text-gray-500 hover:underline">Esqueci minha
+                        senha?</a>
+                    <button
+                        class="login-button w-full bg-blue-600 text-white rounded-md py-2 hover:bg-blue-700 transition"
+                        type="submit">Entrar</button>
+                    <div class="separator flex items-center my-4">
+                        <hr class="flex-grow border-gray-300">
+                        <span class="mx-4 text-gray-500">OU</span>
+                        <hr class="flex-grow border-gray-300">
+                    </div>
+                    <button
+                        class="google-login flex items-center justify-center border rounded px-4 py-2 w-full hover:bg-gray-100">
+                        <img width="38" height="38" src="https://img.icons8.com/fluency/96/google-logo.png"
+                            alt="google-logo" class="mr-2">Entrar com
+                        Google</button>
+                </form>
+            </div>
+        </section>
+        <section class="img-section">
+            <div class="img-div"></div>
+        </section>
+    </main>
+
+    <script src="../assets/js/login.js"></script>
+</body>
+
+</html>

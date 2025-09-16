@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+export function initHomePage() {
   const header = document.getElementById("main-header");
   const toggle = document.getElementById("theme-toggle");
   const menu = document.getElementById("theme-menu");
@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Captura seleção de tema
   menu.querySelectorAll("button").forEach(btn => {
     btn.addEventListener("click", () => {
       const theme = btn.dataset.theme;
@@ -33,4 +32,4 @@ document.addEventListener("DOMContentLoaded", () => {
       header.classList.remove("translate-y-0");
     }
   });
-});
+}
