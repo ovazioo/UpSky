@@ -3,20 +3,18 @@
     "short_name": "Up Sky",
     "description": "Plataforma de Nuvem",
     "start_url": "/index.html",
-    "display": "standalone",
+    "display": "minimal-ui",
     "background_color": "#ffffff",
     "theme_color": "#0a5579",
     "icons": [
         {
-        "src": "/assets/imgs/logo-clara.svg",
+        "src": "/assets/imgs/logo-192x.png",
         "sizes": "192x192",
         "type": "image/svg+xml"
         },
         {
-        "src": "/assets/imgs/logo-escura.svg",
+        "src": "/assets/imgs/logo-512x.png",
         "sizes": "512x512",
-        "type": "image/svg+xml",
-        "purpose": "maskable"
-        }
+        "type": "image/svg+xml"        }
     ]
 }
