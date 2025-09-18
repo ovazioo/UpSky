@@ -1,4 +1,4 @@
-export function initHomePage() {
+function initHomePage() {
   const header = document.getElementById("main-header");
   const toggle = document.getElementById("theme-toggle");
   const menu = document.getElementById("theme-menu");
@@ -19,7 +19,6 @@ export function initHomePage() {
       const theme = btn.dataset.theme;
       console.log("Tema selecionado:", theme);
       menu.classList.add("hidden");
-      // Aqui aplicar lógica de trocar tema
     });
   });
 
@@ -33,3 +32,5 @@ export function initHomePage() {
     }
   });
 }
+
+initHomePage();

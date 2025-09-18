@@ -1,0 +1,22 @@
+{
+    "name": "Up Sky",
+    "short_name": "Up Sky",
+    "description": "Plataforma de Nuvem",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#0a5579",
+    "icons": [
+        {
+        "src": "/assets/imgs/logo-clara.svg",
+        "sizes": "192x192",
+        "type": "image/svg+xml"
+        },
+        {
+        "src": "/assets/imgs/logo-escura.svg",
+        "sizes": "512x512",
+        "type": "image/svg+xml",
+        "purpose": "maskable"
+        }
+    ]
+}

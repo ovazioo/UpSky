@@ -34,11 +34,8 @@
                     </div>
                 </div>
 
-                <button class="px-6 py-3 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
-                    style="background-color: #0a5579;">
-                    <a href="login.html text-white">
-                        COMEÇAR
-                    </a>
+                <button data-page="login" class="px-6 py-3 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
+                    style="background-color: #0a5579;"> COMEÇAR
                 </button>
             </div>
         </div>
@@ -56,12 +53,10 @@
                 <h4 class="text-xl transition-colors duration-300 hover:text-blue-400" style="color: #0a5579;">
                     Plataforma gratuita para aprender <br> nuvem de modo eficaz!
                 </h4>
-                <button
+                <button data-page="login"
                     class="mt-6 px-6 py-3 text-white rounded-lg shadow-md hover:bg-blue-700 hover:scale-105 transition duration-300"
                     style="background-color: #0a5579;">
-                    <a href="../pages/login.html" class="text-white">
-                        COMEÇAR
-                    </a>
+                    COMEÇAR
                 </button>
             </div>
 
@@ -87,27 +82,18 @@
                     <b>De forma: <br> ORGANIZADA; <br> DIDÁTICA; <br> COM DESAFIOS;</b>
                 </h4>
 
-                <div class="relative w-[300px] h-[250px] flex justify-center items-center">
-                    <button
-                        class="mt-6 px-6 py-3 text-white rounded-lg shadow-md hover:bg-blue-700 hover:scale-105 transition duration-300"
-                        style="background-color: #0a5579;">
-                        Clique
-                    </button>
-                    <button
-                        class="mt-6 px-6 py-3 text-white rounded-lg shadow-md hover:bg-blue-700 hover:scale-105 transition duration-300"
-                        style="background-color: #0a5579;">
-                        Explore
-                    </button>
-                    <button
-                        class="mt-6 px-6 py-3 text-white rounded-lg shadow-md hover:bg-blue-700 hover:scale-105 transition duration-300"
-                        style="background-color: #0a5579;">
-                        Diversas
-                    </button>
-                    <button class="absolute px-6 py-3 text-white rounded-lg shadow-md cursor-default"
-                        style="top: 50%; right: 0%; transform: translateX(0%); background-color: #0a5579;">
-                        Possibilidades
-                    </button>
+                <div class="botao-box">
+                    <div class="explore">
+                        <div class="botao">Explore</div>
+                    </div>
+                    <div class="botoes">
+                        <div class="botao">Diversas</div>
+                        <div class="botao clicavel">Clique</div>
+                        <div class="botao">Possibilidades</div>
+                    </div>
                 </div>
+
+
             </div>
 
             <!-- Coluna direita -->
@@ -160,8 +146,6 @@
             </div>
         </div>
     </footer>
-
-
     <script src="../assets/js/home.js"></script>
 </body>
 
