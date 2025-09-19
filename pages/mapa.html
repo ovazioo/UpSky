@@ -1,15 +1,509 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    link
-    <title>Up Sky - Dashboard</title>
+    <title>Mapa Mental - Computação em Nuvem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'blue-dark': '#4C5573',
+                        'blue-light': '#7284C8',
+                        'pink-light': '#F2D8E4',
+                        'blue-strong': '#0a5579',
+                        'teal-dark': '#0f766e',
+                        'teal-light': '#0d9488',
+                        'teal-lighter': '#14b8a6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .mental-map-container {
+            transition: all 0.3s ease;
+            min-height: 100vh;
+        }
+
+        .node {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .node:hover {
+            transform: translateX(5px);
+        }
+
+        .children {
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .children.show {
+            max-height: 5000px;
+            opacity: 1;
+        }
+
+        .node-header {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.rotated {
+            transform: rotate(90deg);
+        }
+
+        .connector-line {
+            position: relative;
+        }
+
+        .connector-line::before {
+            content: "";
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            width: 20px;
+            height: 2px;
+            background-color: #7284C8;
+        }
+
+        @media (max-width: 768px) {
+            .mental-map-container {
+                padding: 1rem;
+            }
+
+            .node {
+                margin-left: 0.5rem;
+                padding: 0.75rem;
+            }
+
+            .connector-line::before {
+                left: -15px;
+                width: 15px;
+            }
+
+            .node h1,
+            .node h2,
+            .node h3 {
+                font-size: 90%;
+            }
+        }
+
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+
+        .dark-mode .node {
+            background-color: #2d3748;
+        }
+
+        .print-mode .children {
+            max-height: 5000px !important;
+            opacity: 1 !important;
+            display: block !important;
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-gray-50">
+    <header class="bg-white px-6 py-4 flex justify-between items-center shadow-lg relative">
+        <div class="flex items-center">
+            <img src="../assets/imgs/logo-escura.svg" alt="Logo Up Sky" width="140" height="50" class="logo">
+        </div>
 
+        <!-- Menu para desktop -->
+        <nav class="hidden md:flex space-x-2">
+            <button
+                class="text-blue-strong hover:bg-blue-light hover:bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
+                <i class="fas fa-video mr-2"></i> Aulas
+            </button>
+            <button
+                class="text-blue-strong bg-blue-light bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
+                <i class="fas fa-brain mr-2"></i> Mapa Mental
+            </button>
+            <button
+                class="text-blue-strong hover:bg-blue-light hover:bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
+                <i class="fas fa-user mr-2"></i> Perfil
+            </button>
+        </nav>
+
+        <!-- Botão de logout para desktop -->
+        <button
+            class="hidden md:flex bg-white text-blue-dark hover:bg-gray-100 px-4 py-2 rounded-lg font-semibold items-center">
+            <i class="fas fa-sign-out-alt mr-2"></i> Sair
+        </button>
+
+        <!-- Menu hamburguer para mobile -->
+        <button id="hamburger-btn" class="md:hidden flex flex-col w-8 h-8 justify-center items-center space-y-1">
+            <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+            <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+            <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+        </button>
+
+        <!-- Menu mobile (inicialmente escondido) -->
+        <div id="mobile-menu" class="absolute top-full left-0 w-full bg-white shadow-lg py-2 hidden">
+            <button class="w-full text-left px-6 py-3 text-blue-strong bg-blue-light bg-opacity-30 flex items-center">
+                <i class="fas fa-video mr-2"></i> Aulas
+            </button>
+            <button class="w-full text-left px-6 py-3 text-blue-strong hover:bg-gray-100 flex items-center">
+                <i class="fas fa-brain mr-2"></i> Mapa Mental
+            </button>
+            <button class="w-full text-left px-6 py-3 text-blue-strong hover:bg-gray-100 flex items-center">
+                <i class="fas fa-user mr-2"></i> Perfil
+            </button>
+            <button
+                class="w-full text-left px-6 py-3 text-blue-strong hover:bg-gray-100 flex items-center border-t border-gray-200">
+                <i class="fas fa-sign-out-alt mr-2"></i> Sair
+            </button>
+        </div>
+    </header>
+
+    <main class="mental-map-container p-6">
+        <!-- AWS IAM -->
+        <div class="node bg-white rounded-lg shadow-md p-4 mb-4 ml-4 connector-line">
+            <div class="node-header">
+                <h1 class="text-2xl font-bold text-blue-strong">Computação em Nuvem</h1>
+                <span class="toggle-icon text-blue-light"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="children mt-2 pl-6 border-l-2 border-blue-light">
+                <!-- AWS IAM -->
+                <div class="node bg-blue-50 rounded-lg p-3 mb-3">
+                    <div class="node-header">
+                        <h2 class="text-xl font-semibold text-blue-strong">AWS IAM</h2>
+                        <span class="toggle-icon text-blue-light"><i class="fas fa-chevron-right"></i></span>
+                    </div>
+                    <div class="children mt-2 pl-4">
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">O que é IAM?</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                É o módulo da AWS para controlar usuários, permissões e acessos às instâncias,
+                                aplicações e serviços. Fundamental para segurança, pois evita usar a conta root (que tem
+                                acesso total, inclusive a
+                                billing/pagamentos).
+                            </div>
+                        </div>
+
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">Usuarios</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                São logins com usuário + senha e/ou chaves de acesso programáticas (API keys).
+                                Podem ser usados no console ou em aplicações.
+                                Problema: se credenciais ficarem no código (ex.: subir no GitHub), podem ser
+                                comprometidas.
+                            </div>
+                        </div>
+
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">Roles (funções)</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                Usuários especiais que não têm login direto.
+                                São usados para atribuir permissões a serviços AWS (ex.: EC2, Lambda, S3).
+                                Em vez de credenciais fixas, o serviço assume a role e herda suas permissões.
+                                Mais seguro do que espalhar chaves de acesso no código.
+                            </div>
+                        </div>
+
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">Grupos</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                Permitem organizar permissões para vários usuários ao mesmo tempo.
+                                Mudando a política do grupo, todos os usuários nele recebem a atualização.
+                            </div>
+                        </div>
+
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">Políticas (Policies)</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                Definem o que o usuário/role pode ou não fazer.
+                                Podem ser: Predefinidas pela AWS (ex.: AmazonS3FullAccess) ou Personalizadas (bem
+                                detalhadas, ex.: só leitura em um bucket específico).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IaaS, SaaS, PaaS -->
+                <div class="node bg-blue-50 rounded-lg p-3 mb-3">
+                    <div class="node-header">
+                        <h2 class="text-xl font-semibold text-blue-strong">IaaS, SaaS e PaaS</h2>
+                        <span class="toggle-icon text-blue-light"><i class="fas fa-chevron-right"></i></span>
+                    </div>
+                    <div class="children mt-2 pl-4">
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">IaaS</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                Infraestrutura como Serviço<br>
+                                Hardware (servidores, data center)<br>
+                                Rede, cabos, refrigeração<br>
+                                Segurança física<br>
+                                Ex: aluguel de servidores
+                            </div>
+                        </div>
+
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">SaaS</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                Software como Serviço<br>
+                                Aplicativos prontos p/ uso<br>
+                                Planilhas, editores de texto<br>
+                                Apresentações, agenda, calendário<br>
+                                Usuário final acessa online
+                            </div>
+                        </div>
+
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">PaaS</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                Plataforma como Serviço<br>
+                                Sistema operacional<br>
+                                Ferramentas de desenvolvimento<br>
+                                Banco de dados<br>
+                                Licenças de software<br>
+                                Ex: ambiente pronto p/ programar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DevOps e Cloud -->
+                <div class="node bg-blue-50 rounded-lg p-3 mb-3">
+                    <div class="node-header">
+                        <h2 class="text-xl font-semibold text-blue-strong">DEVOPS E CLOUD</h2>
+                        <span class="toggle-icon text-blue-light"><i class="fas fa-chevron-right"></i></span>
+                    </div>
+                    <div class="children mt-2 pl-4">
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">O que é DevOps?</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                DevOps é uma cultura e conjunto de práticas que busca integrar equipes de
+                                desenvolvimento e operação (e também teste, segurança, etc.).<br><br>
+                                Objetivo: entrega mais rápida, confiável e eficiente de software.<br><br>
+                                Vantagens de DevOps:<br>
+                                - Menor tempo de entrega (Time to Market)<br>
+                                - Reduz o tempo entre a ideia do produto e a entrega ao usuário.<br>
+                                - Mitigação de bugs<br>
+                                - Testes automatizados, monitoramento e feedback constante diminuem problemas.<br>
+                                - Maior confiabilidade e automação<br>
+                                - Automatiza processos repetitivos, liberando desenvolvedores para focar em valor.
+                            </div>
+                        </div>
+
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">Como DevOps ajuda na Cloud?</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                <strong>Infraestrutura como Código (IaC):</strong><br>
+                                Ferramentas como Terraform, Crossplane, Pulumi, Ansible permitem criar e gerenciar
+                                infraestrutura
+                                programaticamente. Parametrização facilita replicar ambientes e controlar
+                                custos.<br><br>
+
+                                <strong>Contêineres (Docker, Kubernetes):</strong><br>
+                                Isolam processos e simplificam ambientes de desenvolvimento e produção.
+                                Facilita gerenciamento de microsserviços e replicação de ambientes.<br><br>
+
+                                <strong>Pipelines e CI/CD:</strong><br>
+                                Automatizam desde commits no Git até deploy em produção.
+                                Garantem testes, validação de segurança e análise de código sem intervenção
+                                manual.<br><br>
+
+                                <strong>Segurança e observabilidade:</strong><br>
+                                Monitoramento e logs automatizados.
+                                Dashboards e alertas fornecem feedback contínuo para equipes, melhorando performance e
+                                experiência do
+                                usuário.
+                            </div>
+                        </div>
+
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">DevOps e Cloud</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                Apenas Cloud oferece resiliência e escalabilidade, mas ainda é manual e repetitivo.
+                                Apenas DevOps sem Cloud limita o alcance e a escalabilidade.<br><br>
+
+                                <strong>Juntos:</strong><br>
+                                - Criação, gestão e deploy de infraestrutura se tornam ágeis, eficientes e
+                                escaláveis.<br>
+                                - Comunicação entre equipes melhora e feedback se torna contínuo.<br>
+                                - Profissional se torna mais diferenciado e preparado para qualquer projeto de TI.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Infrastructure as Code (IaC) -->
+                <div class="node bg-blue-50 rounded-lg p-3 mb-3">
+                    <div class="node-header">
+                        <h2 class="text-xl font-semibold text-blue-strong">Infrastructure as Code (IaC)</h2>
+                        <span class="toggle-icon text-blue-light"><i class="fas fa-chevron-right"></i></span>
+                    </div>
+                    <div class="children mt-2 pl-4">
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">Modelos de Infraestrutura</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                <strong>Tradicional (On-Premises):</strong><br>
+                                - Processos manuais (comprar hardware, instalar, cabeamento, configurar).<br>
+                                - Falta de documentação e histórico de mudanças.<br>
+                                - Alto custo (hardware, redundância, backup, refrigeração, licenças).<br>
+                                - Escalabilidade limitada, cara e demorada.<br>
+                                - Ambiente estático.<br><br>
+
+                                <strong>Cloud:</strong><br>
+                                - Tudo virtualizado (hardware → software).<br>
+                                - Modelos de serviço: IaaS → AWS, Azure, GCP; PaaS → Kubernetes, Docker, GitHub,
+                                Salesforce; SaaS → Office 365, Google Docs, Dropbox, OneDrive.<br>
+                                - Automação com IaC.<br>
+                                - Recursos sob demanda → paga pelo uso.<br>
+                                - Escalabilidade e elasticidade.<br>
+                                - Baixo custo inicial, rápida implementação.<br>
+                                - Alta disponibilidade → multi-região, CDNs.
+                            </div>
+                        </div>
+
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">O que é IaC?</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                Definição: Infraestrutura criada e gerenciada como software.<br>
+                                Usa princípios do desenvolvimento de software + DevOps.<br>
+                                Baseada em CI/CD pipelines: integração contínua + entrega contínua.<br>
+                                Controle de versão (ex.: GitHub).<br>
+                                Ambientes replicáveis: Dev → QA → UAT → Produção.<br>
+                                Flexibilidade: criar/destruir ambientes em qualquer região.
+                            </div>
+                        </div>
+
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">Benefícios do IaC</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                - Automação<br>
+                                - Produtividade<br>
+                                - Validação e testes automatizados<br>
+                                - Colaboração<br>
+                                - Padronização<br>
+                                - Documentação embutida<br>
+                                - Auditoria fácil<br>
+                                - Redução de tarefas repetitivas
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cloud Security -->
+                <div class="node bg-blue-50 rounded-lg p-3">
+                    <div class="node-header">
+                        <h2 class="text-xl font-semibold text-blue-strong">Cloud Security</h2>
+                        <span class="toggle-icon text-blue-light"><i class="fas fa-chevron-right"></i></span>
+                    </div>
+                    <div class="children mt-2 pl-4">
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">O que é Cloud Security</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                Proteção da infraestrutura e aplicações na nuvem.
+                                Segurança deixa de ser física (data centers) → passa a ser configuração, acessos e
+                                permissões.
+                            </div>
+                        </div>
+
+                        <div class="node bg-teal-50 rounded p-2 mb-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">Responsabilidade Compartilhada</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                Segurança é dividida entre Cliente e Provedor de Nuvem.
+                                On-premise → responsabilidade total do cliente.
+                                IaaS → PaaS → SaaS → Functions → responsabilidades vão migrando para o provedor.
+                                Cliente foca em código, configurações e acessos.
+                            </div>
+                        </div>
+
+                        <div class="node bg-teal-50 rounded p-2">
+                            <div class="node-header">
+                                <h3 class="text-lg font-medium text-teal-dark">Camadas de Segurança na Cloud</h3>
+                                <span class="toggle-icon text-teal-light"><i class="fas fa-chevron-right"></i></span>
+                            </div>
+                            <div class="children mt-1 pl-3 text-gray-700">
+                                - IAM – identidades e acessos.<br>
+                                - Network – controle do tráfego.<br>
+                                - Endpoint – dispositivos e ativos que acessam.<br>
+                                - Aplicações – segurança em apps hospedados.<br>
+                                - Dados – proteção de bancos de dados e objetos.<br>
+                                - Logs & Monitoramento – visibilidade e auditoria.<br>
+                                - Organização – estrutura de contas/projetos/subscriptions.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/mapa.js"></script>
 </body>
 
 </html>
