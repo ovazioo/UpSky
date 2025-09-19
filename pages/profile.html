@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Up Sky - Perfil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'blue-dark': '#4C5573',
+                        'blue-light': '#7284C8',
+                        'pink-light': '#F2D8E4',
+                        'blue-strong': '#0a5579',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .profile-pic {
+            transition: all 0.3s ease;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+        }
+
+        .badge {
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: translateY(-5px);
+        }
+
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #4C5573;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #7284C8;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(30px);
+        }
+
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+
+        .dark-mode .card {
+            background-color: #2d3748;
+            color: #e2e8f0;
+        }
+
+        /* Estilos para o menu mobile */
+        #mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+            padding: 1rem;
+            flex-direction: column;
+        }
+        
+        #mobile-nav.active {
+            display: flex;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .hamburger-line {
+            transition: all 0.3s;
+        }
+        
+        .hamburger-active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .hamburger-active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .header-nav-desktop {
+                display: none;
+            }
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            .header-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                z-index: 50;
+                padding: 1rem;
+                flex-direction: column;
+            }
+
+            .header-nav.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .settings-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .settings-item>div:first-child {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        .hamburger-line {
+            transition: all 0.3s;
+        }
+
+        .hamburger-active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger-active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="h-screen flex flex-col bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white px-4 py-4 flex justify-between items-center shadow-lg relative">
+        <div class="flex items-center">
+            <img src="../assets/imgs/logo-escura.svg" alt="Logo Up Sky" width="140" height="50" class="logo">
+        </div>
+
+        <!-- Menu para desktop -->
+        <nav class="hidden md:flex space-x-2">
+            <button data-page="indexyt"
+                class="text-blue-strong hover:bg-blue-light hover:bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
+                <i class="fas fa-video mr-2"></i> Aulas
+            </button>
+            <button data-page="mapA"
+                class="text-blue-strong hover:bg-blue-light hover:bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
+                <i class="fas fa-brain mr-2"></i> Mapa Mental
+            </button>
+            <button data-page="profile"
+                class="text-blue-strong bg-blue-light bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
+                <i class="fas fa-user mr-2"></i> Perfil
+            </button>
+        </nav>
+
+        <div class="flex items-center">
+            <button data-page="login"
+                class="hidden md:flex bg-white text-blue-dark hover:bg-gray-100 px-4 py-2 rounded-lg font-semibold items-center">
+                <i class="fas fa-sign-out-alt mr-2"></i> Sair
+            </button>
+
+            <!-- Menu hamburguer para mobile -->
+            <button id="hamburger-btn" class="md:hidden flex flex-col w-6 h-5 justify-between items-center ml-4">
+                <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+                <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+                <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+            </button>
+        </div>
+
+        <nav id="mobile-nav">
+            <button data-page="indexyt"
+                class="w-full text-left px-4 py-3 text-blue-strong hover:bg-blue-light hover:bg-opacity-30 flex items-center">
+                <i class="fas fa-video mr-2"></i> Aulas
+            </button>
+            <button data-page="mapA"
+                class="w-full text-left px-4 py-3 text-blue-strong hover:bg-blue-light hover:bg-opacity-30 flex items-center">
+                <i class="fas fa-brain mr-2"></i> Mapa Mental
+            </button>
+            <button data-page="profile"
+                class="w-full text-left px-4 py-3 text-blue-strong bg-blue-light bg-opacity-30 flex items-center">
+                <i class="fas fa-user mr-2"></i> Perfil
+            </button>
+            <button data-page="login"
+                class="w-full text-left px-4 py-3 text-blue-strong hover:bg-blue-light hover:bg-opacity-30 flex items-center border-t border-gray-200">
+                <i class="fas fa-sign-out-alt mr-2"></i> Sair
+            </button>
+        </nav>
+
+    </header>
+
+    <main class="flex-1 overflow-auto bg-gray-100 p-4 md:p-6">
+        <div class="max-w-4xl mx-auto">
+            <!-- Seção de perfil -->
+            <div class="bg-white rounded-xl shadow-md p-4 md:p-6 mb-4 md:mb-6">
+                <div class="flex flex-col md:flex-row items-center profile-section">
+                    <div class="relative mb-4 md:mb-0 md:mr-6">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80"
+                            alt="Foto de Perfil"
+                            class="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-pink-light profile-pic">
+                        <button
+                            class="absolute bottom-0 right-0 md:bottom-2 md:right-2 bg-blue-strong text-white p-1 md:p-2 rounded-full hover:bg-blue-dark text-xs md:text-base">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex-1 text-center md:text-left">
+                        <div class="mb-2">
+                            <span class="text-blue-light text-base md:text-lg font-semibold">@estudante_upSky</span>
+                        </div>
+                        <h2 class="text-xl md:text-2xl font-bold text-blue-dark mb-4">Arthur Santana</h2>
+
+                        <div class="mb-4">
+                            <h3 class="text-base md:text-lg font-semibold text-blue-dark mb-2">Insígnias</h3>
+                            <div class="flex flex-wrap justify-center md:justify-start gap-2 md:gap-3">
+                                <div class="badge bg-pink-light rounded-full p-1 md:p-2 flex items-center"
+                                    title="Primeira Aula Concluída">
+                                    <i class="fas fa-star text-yellow-500 text-sm md:text-xl"></i>
+                                </div>
+                                <div class="badge bg-pink-light rounded-full p-1 md:p-2 flex items-center"
+                                    title="5 Aulas Concluídas">
+                                    <i class="fas fa-trophy text-blue-light text-sm md:text-xl"></i>
+                                </div>
+                                <div class="badge bg-pink-light rounded-full p-1 md:p-2 flex items-center"
+                                    title="Comentário Destacado">
+                                    <i class="fas fa-comment-dots text-blue-strong text-sm md:text-xl"></i>
+                                </div>
+                                <div class="badge bg-pink-light rounded-full p-1 md:p-2 flex items-center"
+                                    title="Frequência Semanal">
+                                    <i class="fas fa-calendar-check text-green-500 text-sm md:text-xl"></i>
+                                </div>
+                                <button
+                                    class="badge bg-blue-light text-white rounded-full px-2 py-1 md:px-3 md:py-1 text-xs md:text-sm hover:bg-blue-strong">
+                                    + Ver todas
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configurações da conta -->
+            <div class="bg-white rounded-xl shadow-md p-4 md:p-6">
+                <h2 class="text-xl md:text-2xl font-bold text-blue-dark mb-4 md:mb-6">Configurações da Conta</h2>
+
+                <div class="space-y-4 md:space-y-6">
+                    <!-- Tema do site -->
+                    <div
+                        class="flex flex-col md:flex-row md:items-center md:justify-between p-3 md:p-4 border-b border-gray-200 settings-item">
+                        <div class="mb-2 md:mb-0">
+                            <h3 class="text-base md:text-lg font-semibold text-blue-dark">Tema do Site</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Altere entre modo claro e escuro</p>
+                        </div>
+                        <label class="theme-switch mt-2 md:mt-0">
+                            <input type="checkbox" id="themeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <!-- Sair da conta -->
+                    <div
+                        class="flex flex-col md:flex-row md:items-center md:justify-between p-3 md:p-4 border-b border-gray-200 settings-item">
+                        <div class="mb-2 md:mb-0">
+                            <h3 class="text-base md:text-lg font-semibold text-blue-dark">Sair da Conta</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Encerrar sua sessão atual</p>
+                        </div>
+                        <button
+                            class="bg-blue-light text-white px-3 py-1 md:px-4 md:py-2 rounded-lg hover:bg-blue-strong flex items-center justify-center mt-2 md:mt-0 w-full md:w-auto">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Sair
+                        </button>
+                    </div>
+
+                    <!-- Excluir conta -->
+                    <div
+                        class="flex flex-col md:flex-row md:items-center md:justify-between p-3 md:p-4 border-b border-gray-200 settings-item">
+                        <div class="mb-2 md:mb-0">
+                            <h3 class="text-base md:text-lg font-semibold text-blue-dark">Excluir Conta</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Remover permanentemente sua conta e dados</p>
+                        </div>
+                        <button
+                            class="bg-red-500 text-white px-3 py-1 md:px-4 md:py-2 rounded-lg hover:bg-red-600 flex items-center justify-center mt-2 md:mt-0 w-full md:w-auto">
+                            <i class="fas fa-trash-alt mr-2"></i> Excluir
+                        </button>
+                    </div>
+
+                    <!-- Alterar senha -->
+                    <div
+                        class="flex flex-col md:flex-row md:items-center md:justify-between p-3 md:p-4 border-b border-gray-200 settings-item">
+                        <div class="mb-2 md:mb-0">
+                            <h3 class="text-base md:text-lg font-semibold text-blue-dark">Alterar Senha</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Atualize sua senha de acesso</p>
+                        </div>
+                        <button
+                            class="bg-blue-strong text-white px-3 py-1 md:px-4 md:py-2 rounded-lg hover:bg-blue-dark flex items-center justify-center mt-2 md:mt-0 w-full md:w-auto">
+                            <i class="fas fa-key mr-2"></i> Alterar
+                        </button>
+                    </div>
+
+                    <!-- Suporte -->
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between p-3 md:p-4 settings-item">
+                        <div class="mb-2 md:mb-0">
+                            <h3 class="text-base md:text-lg font-semibold text-blue-dark">Suporte</h3>
+                            <p class="text-gray-600 text-sm md:text-base">Entre em contato com nossa equipe</p>
+                        </div>
+                        <button
+                            class="bg-green-500 text-white px-3 py-1 md:px-4 md:py-2 rounded-lg hover:bg-green-600 flex items-center justify-center mt-2 md:mt-0 w-full md:w-auto">
+                            <i class="fas fa-headset mr-2"></i> Suporte
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/profile.js"></script>
+    <script>
+        // Alternar entre temas claro e escuro
+        const themeToggle = document.getElementById('themeToggle');
+
+        themeToggle.addEventListener('change', function () {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                document.querySelectorAll('.card').forEach(card => {
+                    card.classList.add('dark-mode');
+                });
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.querySelectorAll('.card').forEach(card => {
+                    card.classList.remove('dark-mode');
+                });
+            }
+        });
+
+        // Menu hamburguer para mobile
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        hamburgerBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            this.classList.toggle('hamburger-active');
+            mobileNav.classList.toggle('active');
+        });
+
+        // Fechar menu ao clicar fora dele
+        document.addEventListener('click', function (event) {
+            const isClickInsideNav = mobileNav.contains(event.target);
+            const isHamburger = hamburgerBtn.contains(event.target);
+
+            if (!isClickInsideNav && !isHamburger && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                hamburgerBtn.classList.remove('hamburger-active');
+            }
+        });
+        if (window.innerWidth < 768) {
+            mobileNav.classList.remove('active');
+            hamburgerBtn.classList.remove('hamburger-active');
+        }
+    </script>
+</body>
+
+</html>

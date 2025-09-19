@@ -1,0 +1,65 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f9f9f9;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  max-width: 700px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+#cardsContainer, #dropArea {
+  min-height: 60px;
+  border: 2px dashed #aaa;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 15px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  background-color: #fafafa;
+}
+
+.card {
+  background-color: #1e90ff;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: grab;
+  user-select: none;
+  transition: background-color 0.3s;
+}
+
+.card.dragging {
+  opacity: 0.5;
+}
+
+#checkBtn {
+  margin-top: 20px;
+  padding: 10px 25px;
+  font-size: 16px;
+  border: none;
+  background-color: #1e90ff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#checkBtn:hover {
+  background-color: #0d68c7;
+}
+
+#result {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 18px;
+}

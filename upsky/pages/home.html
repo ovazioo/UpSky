@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../assets/css/home.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Up Sky - Plataforma de Nuvem</title>
+</head>
+
+<body>
+    <header id="main-header"
+        class="fixed top-0 left-0 w-full bg-white shadow-md z-50 transform -translate-y-full transition-transform duration-500">
+        <div class="flex justify-between items-center px-8 py-4">
+            <img src="../assets/imgs/logo-escura.svg" alt="Up Sky Logo modo claro" width="150" height="50">
+
+            <!-- Ações (menu + botão) -->
+            <div class="flex items-center space-x-6">
+                <div class="relative">
+                    <button id="theme-toggle"
+                        class="flex items-center px-4 py-2 bg-gray-100 rounded-lg shadow-sm hover:bg-gray-200 transition">
+                        <i class="bi bi-palette mr-2"></i> Tema
+                        <i class="bi bi-chevron-down ml-2"></i>
+                    </button>
+                    <div id="theme-menu"
+                        class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                        <button class="w-full px-4 py-2 text-left hover:bg-gray-100" data-theme="light">Claro</button>
+                        <button class="w-full px-4 py-2 text-left hover:bg-gray-100" data-theme="dark">Escuro</button>
+                        <button class="w-full px-4 py-2 text-left hover:bg-gray-100" data-theme="auto">Auto</button>
+                    </div>
+                </div>
+
+                <button data-page="login" class="px-6 py-3 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
+                    style="background-color: #0a5579;"> COMEÇAR
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="first-section" class="flex h-screen">
+            <!-- Coluna esquerda -->
+            <div class="w-1/2 flex flex-col justify-center items-center text-center p-8 space-y-6">
+                <img src="../assets/imgs/logo-escura.svg" alt="Logo Up Sky" class="mb-6" width="200" height="200">
+                <h1 class="text-6xl font-bold transition-transform duration-300 hover:scale-105 hover:text-blue-500"
+                    style="color: #0a5579;">
+                    A MELHOR
+                </h1>
+                <h4 class="text-xl transition-colors duration-300 hover:text-blue-400" style="color: #0a5579;">
+                    Plataforma gratuita para aprender <br> nuvem de modo eficaz!
+                </h4>
+                <button data-page="login"
+                    class="mt-6 px-6 py-3 text-white rounded-lg shadow-md hover:bg-blue-700 hover:scale-105 transition duration-300"
+                    style="background-color: #0a5579;">
+                    COMEÇAR
+                </button>
+            </div>
+
+            <!-- Coluna direita -->
+            <div class="w-1/2 p-4">
+                <img src="../assets/imgs/upsky-home-banner1.png" alt="Banner"
+                    class="w-full h-full object-cover rounded-2xl shadow-lg">
+            </div>
+        </section>
+
+        <section
+            class="flex flex-col md:flex-row justify-between items-center py-20 px-8 space-y-16 md:space-y-0 md:space-x-16">
+            <div class="w-full md:w-1/2 flex flex-col justify-center items-center text-center relative">
+                <h1 class="text-6xl font-bold transition-transform duration-300 hover:scale-105 hover:text-blue-500"
+                    style="color: #0a5579;">
+                    O QUE FAZEMOS?
+                </h1>
+
+                <h4 class="text-xl transition-colors duration-300 hover:text-blue-400" style="color: #0a5579;">
+                    <b>Nossa plataforma reúne as melhores <br> aulas gratuitas sobre nuvem</b>
+                </h4>
+                <h4 class="text-xl transition-colors duration-300 hover:text-blue-400" style="color: #0a5579;">
+                    <b>De forma: <br> ORGANIZADA; <br> DIDÁTICA; <br> COM DESAFIOS;</b>
+                </h4>
+
+                <div class="botao-box">
+                    <div class="explore">
+                        <div class="botao">Explore</div>
+                    </div>
+                    <div class="botoes">
+                        <div class="botao">Diversas</div>
+                        <div class="botao clicavel">Clique</div>
+                        <div class="botao">Possibilidades</div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Coluna direita -->
+            <div class="w-full md:w-1/2 flex flex-col justify-start items-center text-center space-y-4">
+                <img src="../assets/imgs/upsky-home-banner2.png" alt="Estudos" class="rounded-2xl object-cover mb-4"
+                    width="500" height="400">
+
+                <h1 class="text-6xl font-bold transition-transform duration-300 hover:scale-105 hover:text-blue-500"
+                    style="color: #0a5579;">ESTUDOS</h1>
+                <h4 class="text-lg" style="color: #0a5579;"><b>
+                        Proporcionamos jogos simples e divertidos <br> sobre cada assunto de nuvem.<br>
+                        Seu progresso é mostrado a partir do nosso <br> MAPA MENTAL INTERATIVO</b>
+                </h4>
+            </div>
+
+        </section>
+
+
+    </main>
+
+    <hr>
+    <footer class="bg-gray-100 text-gray-700 py-6">
+        <div
+            class="container mx-auto flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 px-6">
+
+            <div class="flex-shrink-0">
+                <img src="../assets/imgs/logo-escura.svg" alt="Logo Up Sky" class="w-32">
+            </div>
+
+            <div class="text-center md:text-left text-sm">
+                <p>© 2025 Up Sky</p>
+                <p>Todos os direitos reservados</p>
+            </div>
+
+            <div class="text-sm text-center md:text-left space-y-1">
+                <a href="#" class="hover:underline block">Termos de uso</a>
+                <a href="#" class="hover:underline block">Política de privacidade</a>
+            </div>
+
+            <div class="text-sm text-center md:text-left space-y-1">
+                <p><strong>Contato:</strong></p>
+                <p>upsky@gmail.com</p>
+                <p>11 99999-9999</p>
+                <div class="flex justify-center md:justify-start space-x-4">
+                    <a href="#" class="hover:underline"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="hover:underline"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="hover:underline"><i class="bi bi-discord"></i></a>
+                    <a href="#" class="hover:underline"><i class="bi bi-github"></i></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../assets/js/home.js"></script>
+</body>
+
+</html>

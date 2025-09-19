@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Up Sky - Aulas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'blue-dark': '#4C5573',
+                        'blue-light': '#7284C8',
+                        'pink-light': '#F2D8E4',
+                        'blue-strong': '#0a5579',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .hamburger-line {
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger-active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .sidebar-mobile {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-mobile.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-toggle {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-toggle {
+                display: block;
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                z-index: 40;
+                background: #4C5573;
+                color: white;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+
+            .sidebar-mobile {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                z-index: 50;
+                width: 70%;
+                max-width: 300px;
+                overflow-y: auto;
+            }
+
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 40;
+            }
+
+            .overlay.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body class="h-screen flex flex-col bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white px-6 py-4 flex justify-between items-center shadow-lg relative">
+        <div class="flex items-center">
+            <img src="../assets/imgs/logo-escura.svg" alt="Logo Up Sky" width="140" height="50" class="logo">
+        </div>
+
+        <!-- Menu para desktop -->
+        <nav class="hidden md:flex space-x-2">
+            <button
+                class="text-blue-strong bg-blue-light bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
+                <i class="fas fa-video mr-2"></i> Aulas
+            </button>
+            <button
+                class="text-blue-strong hover:bg-blue-light hover:bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
+                <i class="fas fa-brain mr-2"></i> Mapa Mental
+            </button>
+            <button
+                class="text-blue-strong hover:bg-blue-light hover:bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
+                <i class="fas fa-user mr-2"></i> Perfil
+            </button>
+        </nav>
+
+        <!-- Botão de logout para desktop -->
+        <button
+            class="hidden md:flex bg-white text-blue-dark hover:bg-gray-100 px-4 py-2 rounded-lg font-semibold items-center">
+            <i class="fas fa-sign-out-alt mr-2"></i> Sair
+        </button>
+
+        <!-- Menu hamburguer para mobile -->
+        <button id="hamburger-btn" class="md:hidden flex flex-col w-8 h-8 justify-center items-center space-y-1">
+            <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+            <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+            <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+        </button>
+
+        <!-- Menu mobile (inicialmente escondido) -->
+        <div id="mobile-menu" class="absolute top-full left-0 w-full bg-white shadow-lg py-2 hidden">
+            <button class="w-full text-left px-6 py-3 text-blue-strong bg-blue-light bg-opacity-30 flex items-center">
+                <i class="fas fa-video mr-2"></i> Aulas
+            </button>
+            <button class="w-full text-left px-6 py-3 text-blue-strong hover:bg-gray-100 flex items-center">
+                <i class="fas fa-brain mr-2"></i> Mapa Mental
+            </button>
+            <button class="w-full text-left px-6 py-3 text-blue-strong hover:bg-gray-100 flex items-center">
+                <i class="fas fa-user mr-2"></i> Perfil
+            </button>
+            <button
+                class="w-full text-left px-6 py-3 text-blue-strong hover:bg-gray-100 flex items-center border-t border-gray-200">
+                <i class="fas fa-sign-out-alt mr-2"></i> Sair
+            </button>
+        </div>
+    </header>
+
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Main -->
+    <main class="flex flex-1 overflow-hidden">
+        <!-- Lista de aulas (sidebar) -->
+        <aside id="sidebar"
+            class="w-64 bg-white border-r border-gray-200 p-4 overflow-y-auto shadow-sm sidebar-mobile md:relative md:transform-none">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="font-semibold text-lg text-blue-dark">Aulas Disponíveis</h2>
+                <span class="bg-pink-light text-blue-dark text-xs font-medium px-2 py-1 rounded-full">5 aulas</span>
+            </div>
+            <div class="AulaList space-y-2"></div>
+        </aside>
+
+        <button id="sidebar-toggle" class="sidebar-toggle">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+
+        <section class="flex-1 flex flex-col p-6 bg-gray-50 overflow-auto">
+            <div class="AulaExibition bg-white rounded-xl shadow-md p-6 flex flex-col h-full">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-blue-dark">Selecione uma aula para começar</h2>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 mr-2 relative">
+                            <svg class="w-10 h-10 transform -rotate-90">
+                                <circle cx="20" cy="20" r="15" stroke="#E5E7EB" stroke-width="3" fill="transparent" />
+                                <circle class="progress-ring" cx="20" cy="20" r="15" stroke="#7284C8" stroke-width="3"
+                                    fill="transparent" stroke-dasharray="94.2" stroke-dashoffset="94.2" />
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-xs font-semibold text-blue-dark">0%</span>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500">Progresso</span>
+                    </div>
+                </div>
+
+                <div
+                    class="flex-1 flex flex-col items-center justify-center text-gray-500 p-8 border-2 border-dashed border-pink-light rounded-xl bg-pink-light bg-opacity-30">
+                    <i class="fas fa-play-circle text-5xl mb-4 opacity-50 text-blue-light"></i>
+                    <p class="text-lg text-blue-dark">Selecione uma aula ao lado para começar sua jornada de aprendizado
+                    </p>
+                    <p class="text-sm mt-2 text-blue-dark text-opacity-70">Assista ao vídeo e depois pratique com o jogo
+                        interativo</p>
+                </div>
+
+                <div class="actions mt-6 flex justify-center space-x-4 hidden">
+                    <button
+                        class="bg-blue-strong text-white hover:bg-blue-dark px-5 py-2.5 rounded-lg font-medium flex items-center">
+                        <i class="fas fa-play mr-2"></i> Assistir Vídeo
+                    </button>
+                    <button
+                        class="bg-blue-light text-white hover:bg-blue-strong px-5 py-2.5 rounded-lg font-medium flex items-center">
+                        <i class="fas fa-gamepad mr-2"></i> Jogar
+                    </button>
+                    <button
+                        class="bg-pink-light text-blue-strong hover:bg-pink-light hover:bg-opacity-80 px-5 py-2.5 rounded-lg font-medium flex items-center">
+                        <i class="fas fa-check mr-2"></i> Marcar como concluída
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Dados das aulas
+        
+    </script>
+</body>
+
+</html>

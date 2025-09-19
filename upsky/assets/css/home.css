@@ -1,0 +1,189 @@
+:root {
+  --header-height: 64px; /* será atualizado dinamicamente pelo JS, mas serve como fallback */
+}
+
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e9f0f2;
+    color: #0e4870;
+}
+
+  a {
+    color: #0e4870;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 15px;
+  }
+
+header.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  transform: translateY(-120%);    /* escondido acima */
+  transition: transform 260ms ease, background 260ms ease, box-shadow 260ms ease;
+  z-index: 1000;
+  pointer-events: none;            /* não interage enquanto escondido */
+  background: rgba(255,255,255,0.0);
+}
+
+/* estado visível (quando o usuário já rolou) */
+header.site-header.visible {
+  transform: translateY(0);
+  pointer-events: auto;
+  backdrop-filter: blur(6px);
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+body.header-visible {
+  padding-top: var(--header-height);
+}
+
+@media (max-width: 480px) {
+  :root { --header-height: 56px; }
+  header.site-header { padding: 10px 14px; }
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+header.site-header .logo img { height: 34px; }
+header.site-header button { padding: 8px 12px; border-radius: 8px; }
+
+  /* PRIMEIRA SEÇÃO: divisão em 2 colunas */
+  .section-top {
+    display: flex;
+    gap: 20px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .text-left, .image-right {
+    flex: 1 1 400px;
+  }
+  .text-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px 20px;
+  }
+  .text-left h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 900;
+  }
+  .text-left p {
+    font-weight: 600;
+    font-size: 1.15rem;
+  }
+  .text-left button {
+    align-self: flex-start;
+  }
+
+  .image-right img {
+    border: 3px solid #145077;
+    box-shadow: 0 0 15px #0e4870aa;
+    border-radius: 2px;
+  }
+
+  /* SEGUNDA SEÇÃO */
+  .section-middle {
+    margin: 50px 0;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .section-middle .text-content {
+    flex: 1 1 500px;
+  }
+
+  .section-middle h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    margin: 0 0 8px 0;
+  }
+  .section-middle p {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .section-middle .btn-mapa {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .btn-mapa button {
+    background-color: #145077;
+    color: white;
+    padding: 10px 20px;
+    font-weight: 700;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 4px 5px rgb(20 80 120 / 0.3);
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  .btn-mapa button:hover {
+    background-color: #0e3555;
+    box-shadow: 0 6px 10px rgb(14 53 85 / 0.5);
+  }
+
+  /* Elemento central clique */
+  .btn-mapa .center-btn {
+    background-color: #0b3650;
+    box-shadow: 0 5px 10px rgb(11 54 80 / 0.6);
+  }
+  .btn-mapa .center-btn:hover {
+    background-color: #064060;
+  }
+
+  /* Box de estudos com texto estilizado */
+  .estudos-box {
+    flex: 1 1 450px;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .estudos-box strong {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 12px;
+  }
+  .estudos-box p {
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  /* Imagem ilustrativa da segunda seção */
+  .section-middle .image-illustration {
+    flex: 1 1 320px;
+    text-align: center;
+  }
+  .section-middle .image-illustration img {
+    max-width: 100%;
+    height: auto;
+  }
