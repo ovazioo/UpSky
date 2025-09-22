@@ -198,4 +198,3 @@ const aulas = [
         }
         updateAulaList();
         updateProgress();
-        initIndexytPage();
