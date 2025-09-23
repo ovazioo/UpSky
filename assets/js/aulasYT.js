@@ -1,4 +1,4 @@
-function initAulas() {
+function initAulasPage() {
     const aulas = [
         {
             titulo: "Aula 1 - Memory Game",
@@ -218,5 +218,4 @@ function initAulas() {
     updateProgress();
 }
 
-// Inicializar quando o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', initAulas);
+initAulasPage();
