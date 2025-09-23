@@ -4,7 +4,7 @@ let currentScript = null;
 async function loadPage(pageName) {
   try {
     // Carrega o HTML da página
-    const res = await fetch(`./pages/${pageName}.html`);
+    const res = await fetch(`pages/${pageName}.html`);
     if (!res.ok) throw new Error(`Erro ao carregar ${pageName}.html`);
 
     const html = await res.text();
@@ -18,8 +18,12 @@ async function loadPage(pageName) {
 
     // Carrega o JS correspondente à página
     const script = document.createElement("script");
-    script.src = `./assets/js/${pageName}.js`;
-    script.onload = () => console.log(`${pageName}.js carregado`);
+    script.src = `assets/js/${pageName}.js`;
+    script.onload = () =>{ console.log(`${pageName}.js carregado`);
+    if (pageName === "aulas" && typeof initAulas === "function") {
+      initAulas();
+    }
+    };
     document.body.appendChild(script);
     currentScript = script;
   } catch (err) {

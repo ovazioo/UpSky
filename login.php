@@ -1,40 +1,35 @@
 <?php
+header('Content-Type: application/json');
+
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "UpskyCadastro";
 
-// Conexão com o banco
 $conn = new mysqli($servername, $username, $password, $dbname);
+
 if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
+    echo json_encode(["success" => false, "message" => "Falha na conexão"]);
+    exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = $_POST['email'] ?? '';
-    $senha = $_POST['senha'] ?? '';
+$email = $_POST['email'] ?? '';
+$senha = $_POST['senha'] ?? '';
 
-    // Busca o usuário pelo email
-    $stmt = $conn->prepare("SELECT senha FROM cadastro WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+$sql = "SELECT senha FROM cadastro WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-
-        // Verifica a senha
-        if (password_verify($senha, $user['senha'])) {
-            header('location: index.html');
-        } else {
-            echo "Senha incorreta.";
-        }
+if ($row = $result->fetch_assoc()) {
+    if (password_verify($senha, $row['senha'])) {
+        echo json_encode(["success" => true, "message" => "Login efetuado"]);
     } else {
-        echo "Email não encontrado.";
+        echo json_encode(["success" => false, "message" => "Senha incorreta"]);
     }
-
-    $stmt->close();
+} else {
+    echo json_encode(["success" => false, "message" => "Usuário não encontrado"]);
 }
 
 $conn->close();
-?>

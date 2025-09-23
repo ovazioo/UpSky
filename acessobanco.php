@@ -44,10 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bind_param("sssss", $email, $nome_usuario, $nome_completo, $data_nascimento, $hash);
 
     if ($stmt->execute()) {
-     header("Location: index.html");
-     exit;
-
-    exit;
+        header("location: index.html");
+        exit;
     } else {
         echo "Erro ao cadastrar: " . $stmt->error;
     }
@@ -56,4 +54,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 $conn->close();
-?>

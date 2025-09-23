@@ -112,11 +112,11 @@
             padding: 1rem;
             flex-direction: column;
         }
-        
+
         #mobile-nav.active {
             display: flex;
         }
-        
+
         .hamburger {
             display: none;
             flex-direction: column;
@@ -125,19 +125,19 @@
             height: 18px;
             cursor: pointer;
         }
-        
+
         .hamburger-line {
             transition: all 0.3s;
         }
-        
+
         .hamburger-active .hamburger-line:nth-child(1) {
             transform: rotate(45deg) translate(6px, 6px);
         }
-        
+
         .hamburger-active .hamburger-line:nth-child(2) {
             opacity: 0;
         }
-        
+
         .hamburger-active .hamburger-line:nth-child(3) {
             transform: rotate(-45deg) translate(6px, -6px);
         }
@@ -146,7 +146,7 @@
             .hamburger {
                 display: flex;
             }
-            
+
             .header-nav-desktop {
                 display: none;
             }
@@ -219,59 +219,56 @@
 </head>
 
 <body class="h-screen flex flex-col bg-gray-50">
-    <header class="bg-white px-4 py-4 flex justify-between items-center shadow-lg relative">
+    <header class="bg-white px-6 py-4 flex justify-between items-center shadow-lg relative">
         <div class="flex items-center">
-            <img src="../assets/imgs/logo-escura.svg" alt="Logo Up Sky" width="140" height="50" class="logo">
+            <img src="/assets/imgs/logo-escura.svg" alt="Logo Up Sky" width="140" height="50" class="logo">
         </div>
 
+        <!-- Menu para desktop -->
         <nav class="hidden md:flex space-x-2">
-            <button data-page="indexyt"
-                class="text-blue-strong hover:bg-blue-light hover:bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
+            <button data-page="aulasYT"
+                class="text-blue-strong bg-blue-light bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
                 <i class="fas fa-video mr-2"></i> Aulas
             </button>
-            <button data-page="mapA"
+            <button data-page="mapa"
                 class="text-blue-strong hover:bg-blue-light hover:bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
                 <i class="fas fa-brain mr-2"></i> Mapa Mental
             </button>
             <button data-page="profile"
-                class="text-blue-strong bg-blue-light bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
+                class="text-blue-strong hover:bg-blue-light hover:bg-opacity-30 px-4 py-2 rounded-lg font-medium flex items-center">
                 <i class="fas fa-user mr-2"></i> Perfil
             </button>
         </nav>
 
-        <div class="flex items-center">
-            <button data-page="login"
-                class="hidden md:flex bg-white text-blue-dark hover:bg-gray-100 px-4 py-2 rounded-lg font-semibold items-center">
-                <i class="fas fa-sign-out-alt mr-2"></i> Sair
-            </button>
+        <!-- Botão de logout para desktop -->
+        <button
+            class="hidden md:flex bg-white text-blue-dark hover:bg-gray-100 px-4 py-2 rounded-lg font-semibold items-center">
+            <i class="fas fa-sign-out-alt mr-2"></i> Sair
+        </button>
 
-            <!-- Menu hamburguer para mobile -->
-            <button id="hamburger-btn" class="md:hidden flex flex-col w-6 h-5 justify-between items-center ml-4">
-                <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
-                <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
-                <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+        <!-- Menu hamburguer para mobile -->
+        <button id="hamburger-btn" class="md:hidden flex flex-col w-8 h-8 justify-center items-center space-y-1">
+            <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+            <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+            <div class="hamburger-line w-6 h-0.5 bg-blue-dark"></div>
+        </button>
+
+        <!-- Menu mobile (inicialmente escondido) -->
+        <div id="mobile-menu" class="absolute top-full left-0 w-full bg-white shadow-lg py-2 hidden">
+            <button class="w-full text-left px-6 py-3 text-blue-strong bg-blue-light bg-opacity-30 flex items-center">
+                <i class="fas fa-video mr-2"></i> Aulas
+            </button>
+            <button class="w-full text-left px-6 py-3 text-blue-strong hover:bg-gray-100 flex items-center">
+                <i class="fas fa-brain mr-2"></i> Mapa Mental
+            </button>
+            <button class="w-full text-left px-6 py-3 text-blue-strong hover:bg-gray-100 flex items-center">
+                <i class="fas fa-user mr-2"></i> Perfil
+            </button>
+            <button
+                class="w-full text-left px-6 py-3 text-blue-strong hover:bg-gray-100 flex items-center border-t border-gray-200">
+                <i class="fas fa-sign-out-alt mr-2"></i> Sair
             </button>
         </div>
-
-        <nav id="mobile-nav">
-            <button data-page="indexyt"
-                class="w-full text-left px-4 py-3 text-blue-strong hover:bg-blue-light hover:bg-opacity-30 flex items-center">
-                <i class="fas fa-video mr-2"></i> Aulas
-            </button>
-            <button data-page="mapA"
-                class="w-full text-left px-4 py-3 text-blue-strong hover:bg-blue-light hover:bg-opacity-30 flex items-center">
-                <i class="fas fa-brain mr-2"></i> Mapa Mental
-            </button>
-            <button data-page="profile"
-                class="w-full text-left px-4 py-3 text-blue-strong bg-blue-light bg-opacity-30 flex items-center">
-                <i class="fas fa-user mr-2"></i> Perfil
-            </button>
-            <button data-page="login"
-                class="w-full text-left px-4 py-3 text-blue-strong hover:bg-blue-light hover:bg-opacity-30 flex items-center border-t border-gray-200">
-                <i class="fas fa-sign-out-alt mr-2"></i> Sair
-            </button>
-        </nav>
-
     </header>
 
     <main class="flex-1 overflow-auto bg-gray-100 p-4 md:p-6">
@@ -280,8 +277,7 @@
             <div class="bg-white rounded-xl shadow-md p-4 md:p-6 mb-4 md:mb-6">
                 <div class="flex flex-col md:flex-row items-center profile-section">
                     <div class="relative mb-4 md:mb-0 md:mr-6">
-                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80"
-                            alt="Foto de Perfil"
+                        <img src="" alt="Foto de Perfil"
                             class="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-pink-light profile-pic">
                         <button
                             class="absolute bottom-0 right-0 md:bottom-2 md:right-2 bg-blue-strong text-white p-1 md:p-2 rounded-full hover:bg-blue-dark text-xs md:text-base">
